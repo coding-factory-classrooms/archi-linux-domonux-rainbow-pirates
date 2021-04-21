@@ -1,4 +1,5 @@
 #!/bin/bash
+# $1: time in miliseconds between each info sent by the script
 gcc genTick.c -o genTick;
 
 mkdir "/home/$USER/$2"
