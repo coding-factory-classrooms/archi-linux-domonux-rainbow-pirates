@@ -22,6 +22,8 @@ while [[ $(eval "pgrep -u $USER 'generation.sh' | wc -c") -gt 1 ]];do
         if [[ $size -gt $4 ]];then
             kill $pid;
             echo "too big";
+            tarfile=$(date +"%Y_%m_%d_%H_%M_%S")_logs.tar
+            tar cvf $1/$tarfile.tar $1/$2 $1/$3
         fi
     done
 done
