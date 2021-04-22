@@ -1,8 +1,11 @@
 #!/bin/bash
 gcc genTick.c -o genTick;
 
-destdir=./logs/$2
+mkdir "/home/$USER/$2"
+destdir="/home/$USER/$2"
 regex="Sensor|Value"
+
+echo "User: $UID"
 
 ./genTick $1 | python3 genSensorData.py | {
     while IFS= read -r line; do
