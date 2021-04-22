@@ -1,9 +1,27 @@
 #!/bin/bash
 # $1: time in miliseconds between each info sent by the script
+# $2: a directory name
+# $3: log file for stdin output
+# $4: log file for stderr output
+
 gcc genTick.c -o genTick;
 
-mkdir "/home/$USER/$2"
 destdir="/home/$USER/$2"
+
+if [[ ! -d $destdir ]] ; then
+    echo "directory does not exist, creating one"
+    mkdir $destdir
+fi
+
+if [[ ! -f "$destdir/$3" ]] ; then
+    touch "$destdir/$3"
+fi
+
+
+if [[ ! -f "$destdir/$4" ]] ; then
+    touch "$destdir/$4"
+fi
+
 regex="Sensor|Value"
 
 echo "User: $UID"
