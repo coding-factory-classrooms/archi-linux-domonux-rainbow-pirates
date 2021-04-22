@@ -18,18 +18,30 @@ if  [[ ! -d $destdir ]] ; then
 fi
 
 cd $destdir
+touch stats.log
 
 # genSensorData.py is used to correctly identify and kill generation.sh
 while [[ $(eval "pgrep -u $USER -f 'python3 genSensorData.py' | wc -c") -gt 1 ]];do
     pid=$( pgrep -u $USER -f 'python3 genSensorData.py');
-    echo $pid
     for file in $(ls $destdir | grep \.log);do
         size=$(stat -c%s "$destdir/$file");
         if [[ $size -gt $4 ]];then
             kill $pid;
             echo "too big";
+
+            #drunken code start
+
+            cat $2 | wc -l > stats.log
+            cat $3 | wc -l >> stats.log
+            
+            #todo late when sober
+            #sort $2
+            #sort $3
+
+            #drunken code stop
+
             tarfile=$(date +"%Y_%m_%d_%H_%M_%S")_logs
-            tar cvf $tarfile.tar $2 $3
+            tar cvf $tarfile.tar $2 $3 stats.log
         fi
     done
 done
