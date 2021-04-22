@@ -1,3 +1,4 @@
 genTick
 a.out
-*.swap
+*.swp
+logs
