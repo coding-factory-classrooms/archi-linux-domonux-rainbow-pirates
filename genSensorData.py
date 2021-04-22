@@ -7,11 +7,13 @@ error_messages = ["Too many conspiracy per mom in your house, please check you m
         "Weird number of conspiracy per mom, please check the number of mom."]
 
 for line in fileinput.input():
-    print(line)
     if (line == "OK\n"):
         sensor_nbr = str(random.randint(1, 100))
         value = str(random.randint(1, 69))
-        print("Sensor#" + sensor_nbr + ";LivingRoom;value=" + value + ";unit=conspiracy/mom;")
+        sys.stdout.write("Sensor#" + sensor_nbr + ";LivingRoom;value=" + value + ";unit=conspiracy/mom;\n")
+        sys.stdout.flush()
     elif (line == "ERROR\n"):
         error_number = str(random.randint(1, 69))
-        print("Error#" + error_number + ";" + random.choice(error_messages) + ";")
+        sys.stderr.write("Error#" + error_number + ";" + random.choice(error_messages) + ";\n")
+        sys.stderr.flush()
+
