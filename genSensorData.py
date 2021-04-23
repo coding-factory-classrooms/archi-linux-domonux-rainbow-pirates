@@ -13,10 +13,15 @@ for line in fileinput.input():
         value = random.randint(1, 69)
         if (value > max_value):
             max_value = value
-        sys.stdout.write("SensorID#" + sensor_nbr + ";SensorName=LivingRoom;Value=" + str(value) + ";MaxValue=" + str(max_value) + ";unit=conspiracy/mom;\n")
-        sys.stdout.flush()
+        try:
+            sys.stdout.write("SensorID#" + sensor_nbr + ";SensorName=LivingRoom;Value=" + str(value) + ";MaxValue=" + str(max_value) + ";unit=conspiracy/mom;\n")
+            sys.stdout.flush()
+        except:
+            pass
     elif (line == "ERROR\n"):
-        error_number = str(random.randint(1, 69))
-        sys.stderr.write("Error#" + error_number + ";" + random.choice(error_messages) + ";\n")
-        sys.stderr.flush()
-
+        try:
+            error_number = str(random.randint(1, 69))
+            sys.stderr.write("Error#" + error_number + ";" + random.choice(error_messages) + ";\n")
+            sys.stderr.flush()
+        except:
+            pass
