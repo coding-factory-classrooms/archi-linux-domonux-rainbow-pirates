@@ -22,27 +22,31 @@ if [[ ! -f "$destdir/$4" ]] ; then
     touch "$destdir/$4"
 fi
 
-regex="Sensor|Value"
+splitted_regex="Sensor|Value"
 
 echo "User: $UID"
 
-./genTick $1 | python3 genSensorData.py | {
+./genTick $1 | python3 genSensorData.py 2>&1 | {
     while IFS= read -r line; do
-        
-        # Use separator ';' to store in array values differents datas for parsing
-        OLDIFS=$IFS
-        IFS=';'
-        read -a values <<< "$line"
-        IFS=$OLDIFS
-        str_to_store=""
-        for val in ${values[@]};
-        do
-            if [[ $val =~ $regex ]]
-            then
-                str_to_store+="$val;"
-            fi
-        done
-        echo $str_to_store >> $destdir/$3
+        if [[ ! $line =~ "Error#" ]]
+        then
+            # Use separator ';' to store in array values differents datas for parsing
+            OLDIFS=$IFS
+            IFS=';'
+            read -a values <<< "$line"
+            IFS=$OLDIFS
+            str_to_store=""
+            for val in ${values[@]};
+            do
+                if [[ $val =~ $splitted_regex ]]
+                then
+                    str_to_store+="$val;"
+                fi
+            done
+            echo $str_to_store >> $destdir/$3
+        else 
+            echo $line >> $destdir/$4
+        fi
     done
 }
 
