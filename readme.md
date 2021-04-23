@@ -1,7 +1,7 @@
 # Archi-Linux
 
 ### How to use our app:
-In a terminal go into the project directory,then type: 
+In a terminal, go into the project directory, then type: 
 ```
 ./supervision.sh arg1 arg2 arg3 arg4 arg5
 ```
