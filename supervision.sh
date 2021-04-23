@@ -25,9 +25,8 @@ while [[ $(eval "pgrep -u $USER 'generation.sh' | wc -c") -gt 1 ]];do
         pid=$( pgrep -u $USER 'generation.sh');
         size=$(stat -c%s "$destdir/$file");
         if [[ $size -gt $5 ]];then
-            kill $pid;
+            kill -s STOP $pid;
             echo "too big";
-
             #drunken code start
             touch stats.log
             cat $2 | wc -l > stats.log
@@ -45,7 +44,8 @@ while [[ $(eval "pgrep -u $USER 'generation.sh' | wc -c") -gt 1 ]];do
             rm $3
             rm stats.log
             popd
-            ./generation.sh $4 $1 $2 $3 &
+            kill -s CONT $pid;
+            #./generation.sh $4 $1 $2 $3 &
             pushd $destdir
         fi
     done

@@ -3,7 +3,7 @@
 # $2: a directory name
 # $3: log file for stdin output
 # $4: log file for stderr output
-
+trap 'goodbye' SIGINT
 gcc genTick.c -o genTick;
 
 destdir="/home/$USER/$2"
