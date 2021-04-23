@@ -28,13 +28,13 @@ while [[ $(eval "pgrep -u $USER 'generation.sh' | wc -c") -gt 1 ]];do
             kill -s STOP $pid;
             echo "too big";
             #drunken code start
+            
             touch stats.log
             cat $2 | wc -l > stats.log
             cat $3 | wc -l >> stats.log
             
-            #todo late when sober
-            #sort $2
-            #sort $3
+            sort -V -o $2 $2
+            sort -V -o $3 $3
 
             #drunken code stop
 
