@@ -17,8 +17,8 @@ destdir="/home/$USER/$1"
 if  [[ ! -d $destdir ]] ; then
     echo "directory does not exist"
 fi
-pushd $destdir
 
+pushd $destdir
 # genSensorData.py is used to correctly identify and kill generation.sh
 while [[ $(eval "pgrep -u $USER 'generation.sh' | wc -c") -gt 1 ]];do
     for file in $(ls $destdir | grep "\.log");do
@@ -40,10 +40,12 @@ while [[ $(eval "pgrep -u $USER 'generation.sh' | wc -c") -gt 1 ]];do
 
             tarfile=$(date +"%Y_%m_%d_%H_%M_%S")_logs
             tar cvf $tarfile.tar $2 $3 stats.log
-            rm $2
-            rm $3
-            rm stats.log
+            > $2
+            > $3
+            > stats.log
+            popd
             kill -s CONT $pid;
+            pushd $destdir
         fi
     done
 done
