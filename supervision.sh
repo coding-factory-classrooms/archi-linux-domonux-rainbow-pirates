@@ -43,10 +43,7 @@ while [[ $(eval "pgrep -u $USER 'generation.sh' | wc -c") -gt 1 ]];do
             rm $2
             rm $3
             rm stats.log
-            popd
             kill -s CONT $pid;
-            #./generation.sh $4 $1 $2 $3 &
-            pushd $destdir
         fi
     done
 done
