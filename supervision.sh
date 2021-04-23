@@ -4,9 +4,16 @@
 # $3: log file for stderr output
 # $4: time between each info
 # $5: a file size (in bytes)
+trap quit SIGINT
+quit(){
+    pid=$( pgrep -u $USER 'generation.sh');
+    kill $pid;
+}
+
 ./generation.sh $4 $1 $2 $3 &
 generation=$(eval "pgrep -u $USER 'generation.sh' | wc -c");
-
+CMDLINE=$(ps -p $(pgrep -u $USER 'generation.sh') -o args --no-headers)
+echo $CMDLINE
 if  [[ ! $generation -gt 1 ]] ;then
     echo "not launched" 
     exit
@@ -49,3 +56,5 @@ while [[ $(eval "pgrep -u $USER 'generation.sh' | wc -c") -gt 1 ]];do
         fi
     done
 done
+
+
